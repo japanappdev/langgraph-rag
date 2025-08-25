@@ -17,7 +17,8 @@ def build_graph():
         query = state["query"]
         top_k = state.get("top_k", 4)
         docs = chroma_retrieve(query, top_k=top_k)
-        return {"contexts": docs}
+        # Return passthrough keys to avoid being dropped by default merge behavior
+        return {"query": query, "top_k": top_k, "contexts": docs}
 
     def generate_node(state: Dict[str, Any]) -> Dict[str, Any]:
         client: OpenAI = get_openai_client()
@@ -43,7 +44,8 @@ def build_graph():
             temperature=0.2,
         )
         answer = resp.choices[0].message.content
-        return {"answer": answer}
+        # Include contexts and passthrough keys so final state contains everything useful
+        return {"query": query, "top_k": state.get("top_k", 4), "contexts": contexts, "answer": answer}
 
     graph = StateGraph(dict)
     graph.add_node("retrieve", retrieve_node)
@@ -69,4 +71,3 @@ async def run_graph(graph, query: str, top_k: int = 4) -> Dict[str, Any]:
         }
 
     return await asyncio.to_thread(_run_sync)
-
