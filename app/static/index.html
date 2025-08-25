@@ -31,7 +31,14 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query, top_k: topk })
         });
-        const data = await res.json();
+        let data;
+        if (!res.ok) {
+          let errBody = {};
+          try { errBody = await res.json(); } catch {}
+          throw new Error(errBody.detail || `HTTP ${res.status}`);
+        } else {
+          data = await res.json();
+        }
         document.getElementById('answer').textContent = data.answer || '(回答なし)';
         const docsEl = document.getElementById('docs');
         docsEl.innerHTML = '';
@@ -43,7 +50,7 @@
           docsEl.appendChild(el);
         });
       } catch (e) {
-        alert('検索に失敗しました: ' + e);
+        alert('検索に失敗しました: ' + (e?.message || e));
       } finally {
         btn.disabled = false; btn.textContent = '検索';
       }
@@ -66,4 +73,3 @@
   </div>
 </body>
 </html>
-

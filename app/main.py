@@ -1,4 +1,5 @@
 import os
+import logging
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -42,11 +43,14 @@ async def search(body: SearchRequest):
         result = await run_graph(app.state.graph, body.query, top_k=body.top_k)
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logging.exception("/search failed: %s", e)
+        raise HTTPException(status_code=500, detail=f"search_failed: {e}")
+
+
+# debug endpoints removed after verification
 
 
 # Mount /static if needed for assets
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 if os.path.isdir(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
-
