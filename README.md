@@ -1,6 +1,7 @@
 # LangGraph × ChromaDB × FastAPI RAG
 
 日本語対応のシンプルな RAG（Retrieval Augmented Generation）システムです。LangGraph で「検索 → 生成」のワークフローを構築し、ChromaDB をベクトル検索、OpenAI API を生成・埋め込みに利用します。トップページ（`/`）に簡易な検索 UI を同梱しています。
+<img width="859" height="810" alt="スクリーンショット 2025-08-25 22 52 54" src="https://github.com/user-attachments/assets/528d8ba2-3b8b-4d8e-bfb3-5e0bb86462fd" />
 
 ## 特長
 - 分かりやすい検索 UI（日本語対応）
