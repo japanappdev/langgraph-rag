@@ -1,0 +1,65 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.code-workspace
+
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.cache/
+.pytest_cache/
+.mypy_cache/
+.pyre/
+ruff_cache/
+
+# Virtual environments / tools
+.venv/
+venv/
+env/
+ENV/
+.python-version
+.uv/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# Logs / temp
+*.log
+logs/
+*.tmp
+*.temp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment files (keep .env.example tracked)
+.env
+.env.local
+.env.*.local
+.envrc
+
+# Docker (local overrides / volumes)
+docker-compose.override.yml
+chroma-data/
+.chroma/
+**/.chroma/
+chroma/
+chroma_db/
+
+# Misc
+node_modules/
+

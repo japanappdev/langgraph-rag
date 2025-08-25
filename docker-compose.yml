@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: chroma
+    ports:
+      - "8000:8000"
+    environment:
+      - ALLOW_RESET=true
+    volumes:
+      - chroma-data:/chroma/.chroma
+
+  api:
+    build: .
+    container_name: rag-api
+    depends_on:
+      - chroma
+    env_file:
+      - .env
+    environment:
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+      - CHROMA_COLLECTION=${CHROMA_COLLECTION:-docs}
+    ports:
+      - "8001:8001"
+
+  seed:
+    build: .
+    container_name: rag-seed
+    depends_on:
+      - chroma
+    env_file:
+      - .env
+    environment:
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+      - CHROMA_COLLECTION=${CHROMA_COLLECTION:-docs}
+      - SEED_GLOB=data/*.md
+    command: ["python", "-m", "scripts.seed"]
+
+volumes:
+  chroma-data:
+

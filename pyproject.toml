@@ -1,0 +1,23 @@
+[project]
+name = "langgraph_rag"
+version = "0.1.0"
+description = "LangGraph + FastAPI + ChromaDB RAG system"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.112.0",
+  "uvicorn[standard]>=0.30.0",
+  "python-dotenv>=1.0.1",
+  "pydantic>=2.8.0",
+  "chromadb>=0.5.4",
+  "openai>=1.40.0",
+  "langgraph>=0.2.35",
+  "langchain>=0.2.14",
+]
+
+[project.scripts]
+seed = "scripts.seed:main"
+
+[tool.uv]
+package = true
+
